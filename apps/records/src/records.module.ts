@@ -1,18 +1,18 @@
 import { Module } from '@nestjs/common';
-import { RoomsService } from './rooms.service';
-import { RoomsController } from './rooms.controller';
+import { RecordsService } from './records.service';
+import { RecordsController } from './records.controller';
 import { AUTH_SERVICE, DatabaseModule, LoggerModule } from '@app/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import * as Joi from 'joi';
 import { ClientsModule, Transport } from '@nestjs/microservices';
-import { Room, RoomSchema } from './models/room.schema';
-import { RoomsRepository } from './rooms.repository';
+import { Record, RecordSchema } from './models/record.schema';
+import { RecordsRepository } from './records.repository';
 
 @Module({
   imports: [
     DatabaseModule,
     DatabaseModule.forFeature([
-      { name: Room.name, schema: RoomSchema },
+      { name: Record.name, schema: RecordSchema },
     ]),
     LoggerModule,
     ConfigModule.forRoot({
@@ -38,8 +38,7 @@ import { RoomsRepository } from './rooms.repository';
       },
     ]),
   ],
-  controllers: [RoomsController],
-  providers: [RoomsService, RoomsRepository],
+  controllers: [RecordsController],
+  providers: [RecordsService, RecordsRepository],
 })
-
-export class RoomsModule {}
+export class RecordsModule {}

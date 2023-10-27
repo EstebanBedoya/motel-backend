@@ -34,6 +34,15 @@
       "compilerOptions": {
         "tsConfigPath": "apps/rooms/tsconfig.app.json"
       }
+    },
+    "records": {
+      "type": "application",
+      "root": "apps/records",
+      "entryFile": "main",
+      "sourceRoot": "apps/records/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/records/tsconfig.app.json"
+      }
     }
   },
   "monorepo": true,
