@@ -1,20 +1,29 @@
-import { Injectable, UnprocessableEntityException } from '@nestjs/common';
+import {
+  Inject,
+  Injectable,
+  UnprocessableEntityException,
+} from '@nestjs/common';
 import { CreateRoomDto } from './dto/create-room.dto';
 import { UpdateRoomDto } from './dto/update-room.dto';
 import { RoomsRepository } from './rooms.repository';
+import { PricesService } from './prices/prices.service';
 
 @Injectable()
 export class RoomsService {
-  constructor(private readonly roomsRepository: RoomsRepository) {}
+  constructor(
+    private readonly roomsRepository: RoomsRepository,
+    @Inject(PricesService) private readonly pricesService: PricesService,
+  ) {}
 
   async create(createRoomDto: CreateRoomDto) {
     await this.validateCreateRoomDto(createRoomDto);
+    await this.validatePriceExist(createRoomDto);
 
     return this.roomsRepository.create(createRoomDto);
   }
 
   async findAll() {
-    return this.roomsRepository.findAll({});
+    return this.roomsRepository.findWithPrice();
   }
 
   async findOne(roomId: number) {
@@ -40,5 +49,13 @@ export class RoomsService {
     }
 
     throw new UnprocessableEntityException('RoomId already exists.');
+  }
+
+  private async validatePriceExist({ price }: CreateRoomDto) {
+    try {
+      await this.pricesService.findOne(price);
+    } catch (error) {
+      throw new UnprocessableEntityException('PriceId does not exist.');
+    }
   }
 }

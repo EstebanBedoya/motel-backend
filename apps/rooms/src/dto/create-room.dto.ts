@@ -1,6 +1,4 @@
-import { ArrayMinSize, IsArray, IsNotEmpty, IsString } from "class-validator";
-import { PriceDto } from "./price.dto";
-import { Type } from "class-transformer";
+import { IsNotEmpty, IsString } from 'class-validator';
 
 export class CreateRoomDto {
   @IsString()
@@ -19,8 +17,7 @@ export class CreateRoomDto {
   @IsNotEmpty()
   state: string;
 
-  @IsArray()
-  @ArrayMinSize(1)
-  @Type(() => PriceDto)
-  prices: PriceDto[];
+  @IsString()
+  @IsNotEmpty()
+  price: string;
 }

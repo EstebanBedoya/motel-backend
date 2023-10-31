@@ -5,7 +5,7 @@ import {
   WebSocketServer,
 } from '@nestjs/websockets';
 import { Server } from 'socket.io';
-import { UpdateRoomStateDto } from './dto/update-room-state.dto';
+import { UpdateRoomStateDto } from '../dto/update-room-state.dto';
 import { RoomsService } from '../rooms.service';
 import { Inject, forwardRef } from '@nestjs/common';
 

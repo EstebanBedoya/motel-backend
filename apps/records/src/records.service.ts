@@ -8,10 +8,10 @@ import { UserDto } from '@app/common';
 export class RecordsService {
   constructor(private readonly recordsRepository: RecordsRepository) {}
 
-  async create(createRecordDto: CreateRecordDto, { email }: UserDto) {
+  async create(createRecordDto: CreateRecordDto, { _id }: UserDto) {
     return this.recordsRepository.create({
       ...createRecordDto,
-      employee: email,
+      employee: _id,
     });
   }
 

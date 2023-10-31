@@ -1,13 +1,19 @@
 import { Module } from '@nestjs/common';
 import { RoomsService } from './rooms.service';
 import { RoomsController } from './rooms.controller';
-import { AUTH_SERVICE, DatabaseModule, LoggerModule } from '@app/common';
+import {
+  AUTH_SERVICE,
+  DatabaseModule,
+  LoggerModule,
+  RoomSchema,
+  Room,
+} from '@app/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import * as Joi from 'joi';
 import { ClientsModule, Transport } from '@nestjs/microservices';
-import { Room, RoomSchema } from './models/room.schema';
 import { RoomsRepository } from './rooms.repository';
 import { EventsModule } from './events/events.module';
+import { PricesModule } from './prices/prices.module';
 
 @Module({
   imports: [
@@ -37,6 +43,7 @@ import { EventsModule } from './events/events.module';
       },
     ]),
     EventsModule,
+    PricesModule,
   ],
   controllers: [RoomsController],
   providers: [RoomsService, RoomsRepository],

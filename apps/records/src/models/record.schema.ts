@@ -1,12 +1,12 @@
-import { AbstractDocument } from '@app/common';
+import { AbstractDocument, Room, User } from '@app/common';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 
 @Schema({ versionKey: false })
 export class Record extends AbstractDocument {
-  @Prop({ required: true, ref: 'Room' })
+  @Prop({ required: true, ref: Room.name })
   roomId: string;
 
-  @Prop({ required: true, ref: 'User' })
+  @Prop({ required: true, ref: User.name })
   employee: string;
 
   @Prop()
@@ -22,7 +22,7 @@ export class Record extends AbstractDocument {
   typeService: string;
 
   @Prop()
-  valueService: number;
+  value: number;
 }
 
 export const RecordSchema = SchemaFactory.createForClass(Record);

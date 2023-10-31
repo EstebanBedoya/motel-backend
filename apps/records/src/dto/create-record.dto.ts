@@ -26,5 +26,5 @@ export class CreateRecordDto {
 
     @IsNumber()
     @IsNotEmpty()
-    valueService: number;
+    value: number;
 }
