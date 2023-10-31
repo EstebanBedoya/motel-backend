@@ -7,13 +7,12 @@ import * as Joi from 'joi';
 import { ClientsModule, Transport } from '@nestjs/microservices';
 import { Room, RoomSchema } from './models/room.schema';
 import { RoomsRepository } from './rooms.repository';
+import { EventsModule } from './events/events.module';
 
 @Module({
   imports: [
     DatabaseModule,
-    DatabaseModule.forFeature([
-      { name: Room.name, schema: RoomSchema },
-    ]),
+    DatabaseModule.forFeature([{ name: Room.name, schema: RoomSchema }]),
     LoggerModule,
     ConfigModule.forRoot({
       isGlobal: true,
@@ -37,9 +36,10 @@ import { RoomsRepository } from './rooms.repository';
         inject: [ConfigService],
       },
     ]),
+    EventsModule,
   ],
   controllers: [RoomsController],
   providers: [RoomsService, RoomsRepository],
+  exports: [RoomsService],
 })
-
 export class RoomsModule {}
