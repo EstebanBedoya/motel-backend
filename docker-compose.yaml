@@ -35,5 +35,3 @@ services:
       - '3003:3003'
     volumes:
       - .:/usr/src/app
-  mongo:
-    image: mongo
