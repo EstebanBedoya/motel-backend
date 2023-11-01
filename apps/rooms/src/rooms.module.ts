@@ -21,6 +21,7 @@ import { PricesModule } from './prices/prices.module';
     DatabaseModule.forFeature([{ name: Room.name, schema: RoomSchema }]),
     LoggerModule,
     ConfigModule.forRoot({
+      envFilePath: 'env/.rooms.env',
       isGlobal: true,
       validationSchema: Joi.object({
         MONGODB_URI: Joi.string().required(),

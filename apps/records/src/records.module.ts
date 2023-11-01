@@ -16,6 +16,7 @@ import { RecordsRepository } from './records.repository';
     ]),
     LoggerModule,
     ConfigModule.forRoot({
+      envFilePath: 'env/.records.env',
       isGlobal: true,
       validationSchema: Joi.object({
         MONGODB_URI: Joi.string().required(),
