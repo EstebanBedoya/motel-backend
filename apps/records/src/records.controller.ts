@@ -12,11 +12,19 @@ import { RecordsService } from './records.service';
 import { CreateRecordDto } from './dto/create-record.dto';
 import { UpdateRecordDto } from './dto/update-record.dto';
 import { CurrentUser, JwtAuthGuard, Roles, UserDto } from '@app/common';
+import { ApiBody, ApiOkResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
+import { RecordDto } from './dto/record.dto';
 
+@ApiTags('Records')
 @Controller('records')
 export class RecordsController {
   constructor(private readonly recordsService: RecordsService) {}
 
+  @ApiOperation({
+    summary: 'Create a new record',
+  })
+  @ApiBody({ type: CreateRecordDto })
+  @ApiOkResponse({ type: RecordDto })
   @UseGuards(JwtAuthGuard)
   @Post()
   create(
@@ -26,12 +34,21 @@ export class RecordsController {
     return this.recordsService.create(createRecordDto, user);
   }
 
+  @ApiOperation({
+    summary: 'Get all records',
+  })
+  @ApiOkResponse({ type: [RecordDto] })
   @UseGuards(JwtAuthGuard)
   @Get()
   findAll() {
     return this.recordsService.findAll();
   }
 
+  @ApiOperation({
+    summary: 'Update a record',
+  })
+  @ApiOkResponse({ type: UpdateRecordDto })
+  @ApiOkResponse({ type: RecordDto })
   @UseGuards(JwtAuthGuard)
   @Roles('Admin')
   @Patch(':id')
@@ -39,6 +56,10 @@ export class RecordsController {
     return this.recordsService.update(id, updateRecordDto);
   }
 
+  @ApiOperation({
+    summary: 'Update a record',
+  })
+  @ApiOkResponse({ type: RecordDto })
   @UseGuards(JwtAuthGuard)
   @Roles('Admin')
   @Delete(':id')
