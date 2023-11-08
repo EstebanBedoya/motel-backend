@@ -1,6 +1,5 @@
 import { Injectable, UnprocessableEntityException } from '@nestjs/common';
 import { CreatePriceDto } from './dto/create-price.dto';
-import { UpdatePriceDto } from './dto/update-price.dto';
 import { PricesRepository } from './prices.repository';
 
 @Injectable()
@@ -32,6 +31,14 @@ export class PricesService {
       return;
     }
 
-    throw new UnprocessableEntityException('Price name already exists.');
+    throw new UnprocessableEntityException('Price name already exists');
+  }
+
+  async validatePriceExist(priceId: string) {
+    try {
+      await this.findOne(priceId);
+    } catch (error) {
+      throw new UnprocessableEntityException('Price not found');
+    }
   }
 }

@@ -1,10 +1,19 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  UseGuards,
+} from '@nestjs/common';
 import { PricesService } from './prices.service';
 import { CreatePriceDto } from './dto/create-price.dto';
-import { UpdatePriceDto } from './dto/update-price.dto';
 import { JwtAuthGuard, Roles } from '@app/common';
 import { ApiBody, ApiOkResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { PriceDto } from './dto/price.dto';
+import { MessagePattern, Payload } from '@nestjs/microservices';
 
 @ApiTags('Prices')
 @Controller('prices')

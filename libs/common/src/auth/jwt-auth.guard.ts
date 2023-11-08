@@ -24,7 +24,10 @@ export class JwtAuthGuard implements CanActivate {
   canActivate(
     context: ExecutionContext,
   ): boolean | Promise<boolean> | Observable<boolean> {
-    const jwt = context.switchToHttp().getRequest().cookies?.Authentication;
+    const jwtHttp = context.switchToHttp().getRequest().cookies?.Authentication;
+    const jwtRpc = context.switchToRpc().getData().authentication;
+
+    const jwt = jwtHttp || jwtRpc;
 
     if (!jwt) {
       return false;

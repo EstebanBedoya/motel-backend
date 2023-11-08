@@ -3,7 +3,7 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { UsersService } from './users.service';
 import { CurrentUser, UserDto } from '@app/common';
 import { User } from '@app/common';
-import { JwtAuthGuard } from '../guards/jwt-aurh.guard';
+import { JwtAuthGuard } from '../guards/jwt-auth.guard';
 import { ApiBody, ApiOkResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
 
 @ApiTags('Users')

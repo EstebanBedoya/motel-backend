@@ -12,6 +12,6 @@ export class RoomsRepository extends AbstractRepository<Room> {
   }
 
   findWithPrice() {
-    return this.roomModel.find({}).populate('price').lean();
+    return this.roomModel.find({}).populate('priceId').lean();
   }
 }

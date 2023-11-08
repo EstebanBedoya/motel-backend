@@ -5,6 +5,7 @@ import * as cookieParser from 'cookie-parser';
 import { ValidationPipe } from '@nestjs/common';
 import { Logger } from 'nestjs-pino';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import { Transport } from '@nestjs/microservices';
 
 async function bootstrap() {
   const app = await NestFactory.create(RoomsModule);
@@ -21,6 +22,15 @@ async function bootstrap() {
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('docs', app, document);
 
+  app.connectMicroservice({
+    transport: Transport.TCP,
+    options: {
+      host: '0.0.0.0',
+      port: configService.get('TCP_PORT'),
+    },
+  });
+
+  await app.startAllMicroservices();
   await app.listen(configService.get('HTTP_PORT'));
 }
 

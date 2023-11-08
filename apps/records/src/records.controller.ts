@@ -7,6 +7,7 @@ import {
   Param,
   Delete,
   UseGuards,
+  Req,
 } from '@nestjs/common';
 import { RecordsService } from './records.service';
 import { CreateRecordDto } from './dto/create-record.dto';
@@ -14,6 +15,7 @@ import { UpdateRecordDto } from './dto/update-record.dto';
 import { CurrentUser, JwtAuthGuard, Roles, UserDto } from '@app/common';
 import { ApiBody, ApiOkResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { RecordDto } from './dto/record.dto';
+import { Request } from 'express';
 
 @ApiTags('Records')
 @Controller('records')
@@ -30,8 +32,10 @@ export class RecordsController {
   create(
     @Body() createRecordDto: CreateRecordDto,
     @CurrentUser() user: UserDto,
+    @Req() request: Request,
   ) {
-    return this.recordsService.create(createRecordDto, user);
+    const jwt = request.cookies?.Authentication;
+    return this.recordsService.create(createRecordDto, user, jwt);
   }
 
   @ApiOperation({

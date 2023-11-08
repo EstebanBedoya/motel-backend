@@ -17,7 +17,7 @@ export class RoomsService {
 
   async create(createRoomDto: CreateRoomDto) {
     await this.validateCreateRoomDto(createRoomDto);
-    await this.validatePriceExist(createRoomDto);
+    await this.pricesService.validatePriceExist(createRoomDto.priceId);
 
     return this.roomsRepository.create(createRoomDto);
   }
@@ -51,11 +51,7 @@ export class RoomsService {
     throw new UnprocessableEntityException('RoomId already exists.');
   }
 
-  private async validatePriceExist({ price }: CreateRoomDto) {
-    try {
-      await this.pricesService.findOne(price);
-    } catch (error) {
-      throw new UnprocessableEntityException('PriceId does not exist.');
-    }
+  async validatePrice(priceId: string) {
+    return this.pricesService.findOne(priceId);
   }
 }

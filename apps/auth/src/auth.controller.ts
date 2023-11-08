@@ -4,8 +4,14 @@ import { LocalAuthGuard } from './guards/local-auth.guard';
 import { CurrentUser, UserDto } from '@app/common';
 import { Response } from 'express';
 import { MessagePattern, Payload } from '@nestjs/microservices';
-import { JwtAuthGuard } from './guards/jwt-aurh.guard';
-import { ApiBody, ApiOkResponse, ApiOperation, ApiTags, OmitType } from '@nestjs/swagger';
+import { JwtAuthGuard } from './guards/jwt-auth.guard';
+import {
+  ApiBody,
+  ApiOkResponse,
+  ApiOperation,
+  ApiTags,
+  OmitType,
+} from '@nestjs/swagger';
 import { CreateUserDto } from './users/dto/create-user.dto';
 
 @ApiTags('Auth')

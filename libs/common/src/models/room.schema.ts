@@ -1,17 +1,7 @@
 import { AbstractDocument } from '@app/common';
+import { Price } from './price.schema';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-
-enum RoomType {
-  NORMAL = 'normal',
-  SPECIAL = 'special',
-}
-
-enum RoomState {
-  AVAILABLE = 'available',
-  OCCUPIED = 'occupied',
-  CLEANING = 'cleaning',
-  MAINTENANCE = 'maintenance',
-}
+import { RoomState, RoomType } from '../types';
 
 @Schema({ versionKey: false })
 export class Room extends AbstractDocument {
@@ -27,8 +17,8 @@ export class Room extends AbstractDocument {
   @Prop({ enum: RoomState, default: RoomState.AVAILABLE })
   state: string;
 
-  @Prop({ required: true, ref: 'Price' })
-  price: string;
+  @Prop({ required: true, ref: Price.name })
+  priceId: string;
 }
 
 export const RoomSchema = SchemaFactory.createForClass(Room);

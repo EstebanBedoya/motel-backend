@@ -14,6 +14,7 @@ import { UpdateRoomDto } from './dto/update-room.dto';
 import { JwtAuthGuard, Roles } from '@app/common';
 import { ApiBody, ApiOkResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { RoomDto } from './dto/room.dto';
+import { MessagePattern, Payload } from '@nestjs/microservices';
 
 @ApiTags('Rooms')
 @Controller('rooms')
@@ -24,7 +25,7 @@ export class RoomsController {
     summary: 'Create a new room',
   })
   @ApiBody({ type: CreateRoomDto })
-  @ApiOkResponse({ type: CreateRoomDto })
+  @ApiOkResponse({ type: RoomDto })
   @UseGuards(JwtAuthGuard)
   @Roles('Admin')
   @Post()
@@ -35,7 +36,6 @@ export class RoomsController {
   @ApiOperation({
     summary: 'Get all rooms',
   })
-  @ApiBody({ type: CreateRoomDto })
   @ApiOkResponse({ type: RoomDto })
   @UseGuards(JwtAuthGuard)
   @Get()
@@ -77,5 +77,17 @@ export class RoomsController {
   @Delete(':roomId')
   remove(@Param('roomId') roomId: string) {
     return this.roomsService.remove(+roomId);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @MessagePattern('validate-room')
+  async validateRoom(@Payload() data: { roomId: string }) {
+    return await this.roomsService.findOne(+data.roomId);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @MessagePattern('validate-price')
+  async validatePrice(@Payload() data: { priceId: string }) {
+    return await this.roomsService.validatePrice(data.priceId);
   }
 }

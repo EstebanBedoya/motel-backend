@@ -1,5 +1,6 @@
+import { RoomState, RoomType } from '@app/common/types';
 import { ApiProperty } from '@nestjs/swagger';
-import { IsNotEmpty, IsString } from 'class-validator';
+import { IsEnum, IsNotEmpty, IsString } from 'class-validator';
 
 export class CreateRoomDto {
   @ApiProperty()
@@ -12,18 +13,24 @@ export class CreateRoomDto {
   @IsNotEmpty()
   name: string;
 
-  @ApiProperty()
+  @ApiProperty({
+    enum: RoomType,
+  })
   @IsString()
   @IsNotEmpty()
+  @IsEnum(RoomType)
   type: string;
 
-  @ApiProperty()
+  @ApiProperty({
+    enum: RoomState,
+  })
   @IsString()
   @IsNotEmpty()
+  @IsEnum(RoomState)
   state: string;
 
   @ApiProperty()
   @IsString()
   @IsNotEmpty()
-  price: string;
+  priceId: string;
 }

@@ -1,6 +1,7 @@
+import { RoomType, TypeService } from "@app/common/types";
 import { ApiProperty } from "@nestjs/swagger";
 import { Type } from "class-transformer";
-import { IsDate, IsNotEmpty, IsNumber, IsString } from "class-validator";
+import { IsDate, IsEnum, IsNotEmpty, IsNumber, IsString } from "class-validator";
 
 export class CreateRecordDto {
     @ApiProperty()
@@ -11,7 +12,7 @@ export class CreateRecordDto {
     @ApiProperty()
     @IsString()
     @IsNotEmpty()
-    priceName: string;
+    priceId: string;
 
     @ApiProperty()
     @IsDate()
@@ -28,6 +29,7 @@ export class CreateRecordDto {
     @ApiProperty()
     @IsString()
     @IsNotEmpty()
+    @IsEnum(TypeService)
     typeService: string;
 
     @ApiProperty()
