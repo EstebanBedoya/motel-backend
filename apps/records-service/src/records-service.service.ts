@@ -6,10 +6,9 @@ import {
 } from '@nestjs/common';
 import { CreateRecordDto } from './dto/create-record.dto';
 import { UpdateRecordDto } from './dto/update-record.dto';
-import { RecordsRepository } from './records.repository';
+import { RecordsRepository } from './records-service.repository';
 import { ROOMS_SERVICE, UserDto } from '@app/common';
 import { ClientProxy } from '@nestjs/microservices';
-import { lastValueFrom } from 'rxjs';
 import * as dayjs from 'dayjs';
 
 @Injectable()
@@ -19,13 +18,7 @@ export class RecordsService {
     private readonly recordsRepository: RecordsRepository,
   ) {}
 
-  async create(
-    createRecordDto: CreateRecordDto,
-    { _id }: UserDto,
-    jwt: string,
-  ) {
-    await this.validateRoom(createRecordDto.roomId, jwt);
-    await this.validatePrice(createRecordDto.priceId, jwt);
+  async create(createRecordDto: CreateRecordDto, { _id }: UserDto) {
     this.validateDates(createRecordDto);
 
     return this.recordsRepository.create({
@@ -47,32 +40,6 @@ export class RecordsService {
 
   async remove(_id: string) {
     return this.recordsRepository.findOneAndDelete({ _id });
-  }
-
-  private async validateRoom(roomId: string, authentication: string) {
-    try {
-      await lastValueFrom(
-        this.roomsClient.send('validate-room', {
-          roomId,
-          authentication,
-        }),
-      );
-    } catch (error) {
-      throw new UnprocessableEntityException('Room not found');
-    }
-  }
-
-  private async validatePrice(priceId: string, authentication: string) {
-    try {
-      await lastValueFrom(
-        this.roomsClient.send('validate-price', {
-          priceId,
-          authentication,
-        }),
-      );
-    } catch (error) {
-      throw new UnprocessableEntityException('Price not found');
-    }
   }
 
   private validateDates({ checkIn, checkOut }: CreateRecordDto) {

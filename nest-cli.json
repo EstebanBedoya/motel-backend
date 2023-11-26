@@ -1,11 +1,11 @@
 {
   "$schema": "https://json.schemastore.org/nest-cli",
   "collection": "@nestjs/schematics",
-  "sourceRoot": "apps/rooms/src",
+  "sourceRoot": "apps/gateway/src",
   "compilerOptions": {
     "deleteOutDir": true,
     "webpack": true,
-    "tsConfigPath": "apps/rooms/tsconfig.app.json"
+    "tsConfigPath": "apps/gateway/tsconfig.app.json"
   },
   "projects": {
     "common": {
@@ -35,16 +35,25 @@
         "tsConfigPath": "apps/rooms/tsconfig.app.json"
       }
     },
-    "records": {
+    "records-service": {
       "type": "application",
-      "root": "apps/records",
+      "root": "apps/records-service",
       "entryFile": "main",
-      "sourceRoot": "apps/records/src",
+      "sourceRoot": "apps/records-service/src",
       "compilerOptions": {
-        "tsConfigPath": "apps/records/tsconfig.app.json"
+        "tsConfigPath": "apps/records-service/tsconfig.app.json"
+      }
+    },
+    "gateway": {
+      "type": "application",
+      "root": "apps/gateway",
+      "entryFile": "main",
+      "sourceRoot": "apps/gateway/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/gateway/tsconfig.app.json"
       }
     }
   },
   "monorepo": true,
-  "root": "apps/rooms"
+  "root": "apps/gateway"
 }
