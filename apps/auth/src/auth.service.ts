@@ -28,5 +28,9 @@ export class AuthService {
       httpOnly: true,
       expires,
     });
+
+    delete user.password;
+
+    return { ...user, token };
   }
 }

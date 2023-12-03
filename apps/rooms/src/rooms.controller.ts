@@ -37,7 +37,7 @@ export class RoomsController {
     summary: 'Get all rooms',
   })
   @ApiOkResponse({ type: RoomDto })
-  // @UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard)
   @Get()
   findAll() {
     return this.roomsService.findAll();
